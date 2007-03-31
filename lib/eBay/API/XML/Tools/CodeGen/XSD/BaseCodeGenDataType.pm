@@ -2,16 +2,14 @@
 #
 
 ################################################################################
-#
-# Module: ............... <user defined location>eBay/API/XML/tools/codegen/xsd
+# Module: ............... <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. BaseCodeGenDataType.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:45
-#
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
-package BaseCodeGenDataType;
+package eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
 
 
 # Global Variables
@@ -20,13 +18,14 @@ our $VERSION = '0.01';    # The version of this module.
 
 =pod
 
-=head1 BaseCodeGenDataType
+=head1 eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType
 
 Base class for generating the data type classes.
 
 =cut
 
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
 
@@ -41,7 +40,7 @@ use Time::localtime;
 use Data::Dumper;
 use Scalar::Util 'blessed';
 
-use Annotation;
+use eBay::API::XML::Tools::CodeGen::XSD::Annotation;
 
 my $gsRootPackageName = undef;
 
@@ -145,7 +144,7 @@ sub _init {
   my $rhAnnotation = $rh->{'xs:annotation'};
   my $pAnnotation;
   if ( defined $rhAnnotation ) {     
-     $pAnnotation = Annotation->new ( $rhAnnotation );
+     $pAnnotation = eBay::API::XML::Tools::CodeGen::XSD::Annotation->new ( $rhAnnotation );
   }
 
   $self->setAnnotation( $pAnnotation );
@@ -507,8 +506,8 @@ SET_COMMENTS
 
 =head2  getPropertyToCallInfo()
 
-CallInfo is a package defined in Annotation.pm file.
-The packageName is: Annotation::CallInfo
+CallInfo is a package defined in eBay::API::XML::Tools::CodeGen::XSD::Annotation.pm file.
+The packageName is: eBay::API::XML::Tools::CodeGen::XSD::Annotation::CallInfo
 
 =cut
 

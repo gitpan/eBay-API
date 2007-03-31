@@ -2,41 +2,43 @@
 #
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. CodeGenRequestResponseType.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:56
+# Last Modified: ........ 03/30/2007 @ 23:09
 ################################################################################
 
 =pod
 
-=head1 CodeGenRequestResponseType
+=head1 eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType
 
 Generate code for the call response types.
 
 =cut
 
 
-package CodeGenRequestResponseType;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
-use BaseCodeGenDataType;
+use Data::Dumper;
+
+use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
+use eBay::API::XML::Tools::CodeGen::XSD::Element;
 
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
-our @ISA = ('Exporter'
-	    ,'CodeGenComplexDataType'
-           );
+our @ISA = (
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexDataType',
+    );
 
 
-use Data::Dumper;
-use Element;
 
 #
 # use superclass new constructor
@@ -77,7 +79,7 @@ sub _initElementsAndAttributes {
 	    my @arr = ();
 	    foreach my $rhElem (@$raElements) {
 
-	       my $pElement = Element->new( $rhElem );
+	       my $pElement = eBay::API::XML::Tools::CodeGen::XSD::Element->new( $rhElem );
 	       push @arr, $pElement;
 	    }
 

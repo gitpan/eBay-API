@@ -2,11 +2,11 @@
 
 
 ################################################################################
-# Location: ......................... 
-# File: ....................... genEBayApiData.pl
-# Original Author: ............ Milenko Milanovic
-# Last Modified By: ........... Jeff Nokes
-# Last Modified: .............. 03/06/2007 @ 17:11
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
+# File: ................. genEBayApiData.pl
+# Original Author: ...... Milenko Milanovic
+# Last Modified By: ..... Jeff Nokes
+# Last Modified: ........ 03/30/2007 @ 23:09
 #
 # Description:
 # This is a script used to auto-generate the call and datatype classes for
@@ -29,6 +29,7 @@ script with no arguments.  Also, referecne README for more information.
 
 # Required Includes
 # ------------------------------------------------------------------------------
+  use lib '../../../../../../';  # To get access to all packages in XSD directory
   use strict;
   use warnings;
 
@@ -40,16 +41,16 @@ script with no arguments.  Also, referecne README for more information.
   use File::Spec;
   use Data::Dumper;
 
-  use BaseCodeGenDataType;
-  use CodeGenReleaseClass;
-  use CodeGenBaseCallGenClass;
-  use CodeGenRequestResponseType;
-  use CodeGenNonCallRequestResponseType; # example: NotificationMessageType
-  use CodeGenComplexDataType;       # examples: ItemType
-  use CodeGenComplexSimpleDataType; # examples: AmountType
-  use CodeGenSimpleDataType;        # examples: ItemIDType, UserIdType
-  use CodeGenEnumDataType;          # examples: AckDataType
-  use CodeGenApiCall;
+  use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenReleaseClass;
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenBaseCallGenClass;
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType;
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenNonCallRequestResponseType; # examples: NotificationMessageType
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexDataType;            # examples: ItemType
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexSimpleDataType;      # examples: AmountType
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenSimpleDataType;             # examples: ItemIDType, UserIdType
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenEnumDataType;               # examples: AckDataType
+  use eBay::API::XML::Tools::CodeGen::XSD::CodeGenApiCall;
 
 
 
@@ -154,7 +155,7 @@ sub main {
 
    usage ( $filename, $url);	
 
-   BaseCodeGenDataType::setRootPackageName( $gsRootPackageName );
+   eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType::setRootPackageName( $gsRootPackageName );
 
    $ghRootOutputDir = determineOutputDir( $outputDir );
 
@@ -207,8 +208,8 @@ sub main {
    }
 
    my $sReleaseType = _getReleaseType( $inputDocName );
-   BaseCodeGenDataType::setReleaseNumber( $sReleaseNumber );
-   BaseCodeGenDataType::setReleaseType( $sReleaseType );
+   eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType::setReleaseNumber( $sReleaseNumber );
+   eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType::setReleaseType( $sReleaseType );
 
    generateReleaseClass ( $sReleaseNumber, $sReleaseType);
 
@@ -272,8 +273,8 @@ sub generateReleaseClass {
    my $sReleaseNumber = shift;
    my $sReleaseType   = shift;   
 
-   my $CodeGenClass = CodeGenReleaseClass->new ( 
-	                                      name => 'Release'
+   my $CodeGenClass = eBay::API::XML::Tools::CodeGen::XSD::CodeGenReleaseClass->new ( 
+	                                     name => 'Release'
 	                                     ,'number' => $sReleaseNumber
 	                                     ,'type'   => $sReleaseType
 	                                      );
@@ -307,7 +308,7 @@ sub generateBaseCallGenClass {
         print "Aborting code gen.\n";
         exit;
     }
-    my $pCodeGenClass = CodeGenBaseCallGenClass->new( 
+    my $pCodeGenClass = eBay::API::XML::Tools::CodeGen::XSD::CodeGenBaseCallGenClass->new( 
                     'callName'        => 'BaseCallGen'
 			       ,'requestCodeGen'  => $pRequestCodeGenClass
 			       ,'responseCodeGen' => $pResponseCodeGenClass
@@ -503,7 +504,7 @@ sub processTypes {
      my $typeNS = $pClassCodeGen->getTypeNS();
      $hDataTypeClasses { $typeNS } = $pClassCodeGen;
   }
-  BaseCodeGenDataType::setTypeNSToGenDataTypeMapping( \%hDataTypeClasses );
+  eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType::setTypeNSToGenDataTypeMapping( \%hDataTypeClasses );
 
   
      #
@@ -556,7 +557,7 @@ sub processTypes {
     	$numOfErrors++;
         next;	     
      }
-     my $pApiClassGen = CodeGenApiCall->new( 
+     my $pApiClassGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenApiCall->new( 
 	                        'callName'        => $sCallName
 			       ,'requestCodeGen'  => $pRequestCodeGenClass
 			       ,'responseCodeGen' => $pResponseCodeGenClass
@@ -618,7 +619,7 @@ sub processComplexTypes {
       if ( exists ($rhElem->{'xs:complexContent'}) ) {
 
           my $sName = $rhElem->{'name'};
-          $sName = CodeGenRequestResponseType::getCallNameStatic( $sName );
+          $sName = eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType::getCallNameStatic( $sName );
           if ( ! (exists $hApiCalls{$sName}) ) {
                next;
           }
@@ -641,7 +642,7 @@ sub processComplexTypes {
             # If this is a call's request/response skip it.
             # That will be generated with the call.
        my $sName = $rhElem->{'name'};
-       $sName = CodeGenRequestResponseType::getCallNameStatic( $sName );
+       $sName = eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType::getCallNameStatic( $sName );
        if ( $ghCallNames{$sName} ) {
             next;
        }
@@ -672,7 +673,7 @@ sub findApiCalls {
            my $name = $rhElem->{'name'};
 
            my $callName = $name;
-           $callName = CodeGenRequestResponseType::getCallNameStatic( $name );
+           $callName = eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType::getCallNameStatic( $name );
 
            if ($callName) {
                $hApiCalls{$callName} = '';
@@ -692,7 +693,7 @@ sub instantiateRequestResponseClassGenerator {
 
     my $rhElem = shift;
 
-    my $pClassCodeGen = CodeGenRequestResponseType->new( $rhElem );
+    my $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenRequestResponseType->new( $rhElem );
 
        #
     #  1.1 Set values needed for call generation
@@ -740,15 +741,15 @@ sub instantiateComplexTypeClassGenerator {
    my $pClassCodeGen = undef;
    if ( exists ($rhElem->{'xs:complexContent'}) ) {
 
-       $pClassCodeGen = CodeGenNonCallRequestResponseType->new( $rhElem ); 
+       $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenNonCallRequestResponseType->new( $rhElem ); 
 
    } elsif ( exists ($rhElem->{'xs:sequence'}) ) {
 
-       $pClassCodeGen = CodeGenComplexDataType->new( $rhElem );
+       $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexDataType->new( $rhElem );
 
    } elsif ( exists ($rhElem->{'xs:simpleContent'}) ) {
 
-       $pClassCodeGen = CodeGenComplexSimpleDataType->new( $rhElem );
+       $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexSimpleDataType->new( $rhElem );
 
    } else {
       print "Cannot find what code class to instantiate for \n"
@@ -789,10 +790,10 @@ sub instantiateSimpleTypeClassGenerator {
    
    if ( exists ($rhRestriction->{'xs:enumeration'}) ) {
 
-       $pClassCodeGen = CodeGenEnumDataType->new( $rhElem );
+       $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenEnumDataType->new( $rhElem );
    } else {  # simple type with some type restriction
 
-       $pClassCodeGen = CodeGenSimpleDataType->new( $rhElem );
+       $pClassCodeGen = eBay::API::XML::Tools::CodeGen::XSD::CodeGenSimpleDataType->new( $rhElem );
    }
 
    return $pClassCodeGen;

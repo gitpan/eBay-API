@@ -1,17 +1,13 @@
 ################################################################################
-# File: .................... <module_root>/eBay/API/XML/tools/codegen/xsd/README
-# Original Author: ......... Milenko Milanovic
-# Last Modified By: ........ Robert Bradley / Jeff Nokes
-# Last Modifed: ............ 12/12/2006 @ 16:41
+# File: ................... <module_root>/eBay/API/XML/Tools/CodeGen/XSD/README
+# Original Author: ........ Milenko Milanovic
+# Last Modified By: ....... Robert Bradley / Jeff Nokes
+# Last Modifed: ........... 03/30/2007 @ 21:49
 #
 # Description:  Genearl information about the manual execution of the eBay
 #               API class auto-generation tool.
 ################################################################################
 
-
-
-eBay-API version 0.10
-=====================
 
 
 

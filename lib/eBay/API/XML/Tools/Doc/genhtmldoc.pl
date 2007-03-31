@@ -1,11 +1,11 @@
 #!/bin/perl
 
 ################################################################################
-# Location: ................... <user defined location>/eBay/API/XML/tools/doc
+# Location: ................... <user defined location>/eBay/API/XML/Tools/Doc
 # File: ....................... genhtmldoc.pl
 # Original Author: ............ Bob Bradley
 # Last Modifed By: ............ Jeff Nokes
-# Last Modified: .............. 03/15/2007 @ 15:01
+# Last Modified: .............. 03/30/2007 @ 20:08
 #
 # Description
 #

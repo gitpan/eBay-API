@@ -1,12 +1,11 @@
 #!/usr/bin/perl
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. cleanHeaders.pl
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/06/2007 @ 17:07
-#
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
 

@@ -1,6 +1,11 @@
 Revision history for Perl extension eBay::API.
 
 
+0.21  Friday March 30, 2007 @ 23:10 PDT
+- Modified the auto-generation tool libraries to have the fully qualified
+  namespace 'eBay::API::XML::Tools::CodeGen::XSD::*'.
+
+
 0.21  Thursday March 29, 2007 @ 18:00 PDT
 - Finalized version 0.21 for release to public.  Checked into developer.ebay.com
   Subversion codebase, and finished setting up project 'ebay-perl-api-sdk'.

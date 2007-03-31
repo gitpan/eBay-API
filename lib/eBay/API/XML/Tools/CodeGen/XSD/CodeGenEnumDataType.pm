@@ -2,16 +2,16 @@
 #
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. CodeGenEnumDataType.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:53
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
 =pod
 
-=head1 CodeGenEnumDataType
+=head1 eBay::API::XML::Tools::CodeGen::XSD::CodeGenEnumDataType
 
 Generate code for the enumerated data types.
 
@@ -19,26 +19,27 @@ Generate code for the enumerated data types.
 
 
 
-package CodeGenEnumDataType;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenEnumDataType;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
-use BaseCodeGenDataType;
+use Data::Dumper;
+
+use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
+use eBay::API::XML::Tools::CodeGen::XSD::EnumElement;
 
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
 our @ISA = (
-             'Exporter',
-             'BaseCodeGenDataType',
-           );
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType',
+    );
 
 
-use Data::Dumper;
-use EnumElement;
 
 #
 # use superclass new constructor
@@ -74,7 +75,7 @@ sub _initElementsAndAttributes {
      my @aEnums = ();
      foreach my $rhEnum (@$raEnums) {
 
-        my $pEnum = EnumElement->new( $rhEnum );
+        my $pEnum = eBay::API::XML::Tools::CodeGen::XSD::EnumElement->new( $rhEnum );
         push @aEnums, $pEnum;
      }
 

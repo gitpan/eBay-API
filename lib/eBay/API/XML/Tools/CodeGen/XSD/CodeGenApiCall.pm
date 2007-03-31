@@ -2,29 +2,30 @@
 #
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. CodeGenApiCall.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:46
-#
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
-package CodeGenApiCall;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenApiCall;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
-use BaseCodeGenDataType;
+
+use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
 
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
-our @ISA = ('Exporter'
-	    ,'BaseCodeGenDataType'
-	   );
+our @ISA = (
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType',
+    );
 
 use Data::Dumper;
 

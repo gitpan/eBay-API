@@ -1,37 +1,35 @@
 #!/usr/bin/perl -w
 #
 
-
 ################################################################################
-#
-# Module: ............... <user defined location>eBay/API/XML/tools/codegen/xsd
+# Module: ............... <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. CodeGenComplexDataType.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:49
-#
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
 
-package CodeGenComplexDataType;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexDataType;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
-use BaseCodeGenDataType;
+use Data::Dumper;
+
+use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
+use eBay::API::XML::Tools::CodeGen::XSD::Element;
 
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
-our @ISA = ('Exporter'
-	    ,'BaseCodeGenDataType'
-           );
+our @ISA = (
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType',
+    );
 
-
-use Data::Dumper;
-use Element;
 
 #
 # use superclass new constructor
@@ -60,7 +58,7 @@ sub _initElementsAndAttributes {
      my @arr = ();
      foreach my $rhElem (@$raElements) {
 
-        my $pElement = Element->new( $rhElem );
+        my $pElement = eBay::API::XML::Tools::CodeGen::XSD::Element->new( $rhElem );
         push @arr, $pElement;
      }
 
@@ -74,7 +72,7 @@ sub _initElementsAndAttributes {
       my @arr = ();
       foreach my $rhElem (@$raAttributes) {
 
-            my $pElement = Element->new( $rhElem );
+            my $pElement = eBay::API::XML::Tools::CodeGen::XSD::Element->new( $rhElem );
             push @arr, $pElement;
       }
       $self->setAttributes (\@arr );

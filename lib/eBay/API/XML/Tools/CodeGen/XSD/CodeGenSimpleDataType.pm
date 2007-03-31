@@ -3,35 +3,35 @@
 
 
 ################################################################################
-#
-# Module: ............... <user defined location>eBay/API/XML/tools/codegen/xsd
-# File: ................. CodeGenComplexSimpleDataType.pm
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
+# File: ................. CodeGenSimpleDataType.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:51
-#
+# Last Modified By: ..... Robert Bradley / Jeff Nokes
+# Last Modified: ........ 03/30/2007 @ 23:09
 ################################################################################
 
 
-package CodeGenComplexSimpleDataType;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenSimpleDataType;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
-use BaseCodeGenDataType;
+use Data::Dumper;
+
+use eBay::API::XML::Tools::CodeGen::XSD::BaseCodeGenDataType;
+use eBay::API::XML::Tools::CodeGen::XSD::Element;
 
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
-our @ISA = ('Exporter'
-	    ,'CodeGenComplexDataType'
-           );
+our @ISA = (
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::CodeGenComplexDataType',
+    );
 
 
-use Data::Dumper;
-use Element;
 
 #
 # use superclass new constructor
@@ -46,30 +46,27 @@ sub _initElementsAndAttributes {
   my $self = shift;	
   my $rh= shift;
 
-  #print Dumper($self);
+  my $rhRestrictions = $rh->{'xs:restriction'};
+  if ( defined $rhRestrictions ) {
 
-     # 3. superclass name, elements and attributes
+     my $sBase = $rhRestrictions->{'base'};
 
-  my $rhSimpleContent = $rh->{'xs:simpleContent'};
-  if ( defined $rhSimpleContent ) {
+     if ( defined $sBase ) {
 
-     my $rhExtension = $rhSimpleContent->{'xs:extension'};
-
-     if ( defined $rhExtension ) {
-
-         my $rhElem;
+	 my $rhElem;
          my $pElement;	 
 
 	    # 3.1 superclass name
-         my $typeNS = $rhExtension->{'base'};
-	 $typeNS = $self->validateType ( $typeNS );	 
-         $self->setSuperclassName( $typeNS );
+	 my $typeNS = $sBase;
+	 $typeNS = $self->validateType ( $typeNS );
+	 $self->setSuperclassName( $typeNS );
+
 
 	    # 3.2  elements
 	    
-           # each ComplexSimpleDataType type has attributes and a value. 
+           # each SimpleDataType type has just a value. 
 	   # Value can be either a Primitive type or an Enum
-           #   example: AmountType
+           #   example: ItemIDType
            # Type value is defined by 'base' attribute
            #   generate setter/getter for value
            
@@ -83,25 +80,11 @@ sub _initElementsAndAttributes {
 		      ,'maxOccurs'    => undef
                    };		 
 
-	 $pElement = Element->new( $rhElem );
+	 $pElement = eBay::API::XML::Tools::CodeGen::XSD::Element->new( $rhElem );
          my @aElements = ();	      
 	 push @aElements, $pElement;
 
 	 $self->setElements (\@aElements );
-
-	 
-	    # 3.3  attributes
-
-         my $raAttributes = $rhExtension->{'xs:attribute'};	      
-
-	 my @arr = ();
-	 foreach $rhElem (@$raAttributes) {
-
-	    $pElement = Element->new( $rhElem );
-	    push @arr, $pElement;
-	 }
-
-	 $self->setAttributes (\@arr );
      }
   }
 }

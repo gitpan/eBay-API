@@ -2,34 +2,37 @@
 #
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. CodeGenBaseCallGenClass.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:47
+# Last Modified: ........ 03/30/2007 @ 23:08
 ################################################################################
 
 =pod
 
-=head1 CodeGenBaseCallGenClass
+=head1 eBay::API::XML::Tools::CodeGen::XSD::CodeGenBaseCallGenClass
 
 Generate the base class for all code generated call classes.
 
 =cut
 
-package CodeGenBaseCallGenClass;
+package eBay::API::XML::Tools::CodeGen::XSD::CodeGenBaseCallGenClass;
 
+use lib '../../../../../../';  # To get access to all packages in XSD directory
 use strict;
 use warnings;
-
 use Exporter;
+
+#use eBay::API::XML::Tools::CodeGen::XSD::CodeGenApiCall;
 
 # Global Variables
 our $VERSION = '0.01';    # The version of this module.
 
-our @ISA = ('Exporter'
-    	    ,'CodeGenApiCall'
-           );
+our @ISA = (
+       'Exporter',
+       'eBay::API::XML::Tools::CodeGen::XSD::CodeGenApiCall',
+    );
 
 sub _determineFullPackageName {
 

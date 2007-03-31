@@ -2,24 +2,24 @@
 #
 
 ################################################################################
-# Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
+# Location: ............. <user defined location>eBay/API/XML/Tools/CodeGen/XSD
 # File: ................. Annotation.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:45
+# Last Modified: ........ 03/30/2007 @ 23:08
 #
 ################################################################################
 
 =pod
 
-=head1 Annotation
+=head1 eBay::API::XML::Tools::CodeGen::XSD::Annotation
 
 Generate annotations/documentation for the classes.
 
 =cut
 
 
-package Annotation;
+package eBay::API::XML::Tools::CodeGen::XSD::Annotation;
 
 
 # Global Variables
@@ -124,7 +124,7 @@ sub _initAppInfo {
 	 foreach my $rhCallInfo ( @$raCallInfo ) {
 
 	    # pass a hash, rather then a hash ref
-	    my $pCallInfo = Annotation::CallInfo->new ( %$rhCallInfo );	      
+	    my $pCallInfo = eBay::API::XML::Tools::CodeGen::XSD::Annotation::CallInfo->new ( %$rhCallInfo );	      
 	    push @$rArrObjCallInfo, $pCallInfo;
 	 }
       }	   
@@ -402,24 +402,24 @@ sub _getCallsInfoByType {
 
 
 #
-# END package 'Annotation'
+# END package 'eBay::API::XML::Tools::CodeGen::XSD::Annotation'
 #
 
 
 #
-# package Annotation::CallInfo;
+# package eBay::API::XML::Tools::CodeGen::XSD::Annotation::CallInfo;
 #
 
 =pod
 
-=head1 Annotation::CallInfo
+=head1 eBay::API::XML::Tools::CodeGen::XSD::Annotation::CallInfo
 
 Manage call information for the annotations.
 
 =cut
 
 
-package Annotation::CallInfo;
+package eBay::API::XML::Tools::CodeGen::XSD::Annotation::CallInfo;
 
 use Data::Dumper;
 
@@ -475,7 +475,7 @@ sub new {
 
         # 1.1  callNames
    my $refCallNames = $args{'CallName'};
-   $raCallNames = Annotation::scalarMakeSureItsArray ( $refCallNames );
+   $raCallNames = eBay::API::XML::Tools::CodeGen::XSD::Annotation::scalarMakeSureItsArray ( $refCallNames );
 		
 	# 1.2. find attributes
 
@@ -489,7 +489,7 @@ sub new {
 
 	# 1.3. context(s)
    my $refContext = $args{'Context'};
-   $raContext = Annotation::scalarMakeSureItsArray ( $refContext );
+   $raContext = eBay::API::XML::Tools::CodeGen::XSD::Annotation::scalarMakeSureItsArray ( $refContext );
    
    $self->_setCallNames( $raCallNames );
    $self->_setAttributes( $rhAttributes);
