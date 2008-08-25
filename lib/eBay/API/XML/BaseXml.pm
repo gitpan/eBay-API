@@ -4,9 +4,9 @@
 #
 # Module: ............... <user defined location>/eBay/API/XML
 # File: ................. BaseXml.pm
-# Original Author: ...... Jeff Nokes
-# Last Modified By: ..... Bob Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:22
+# Original Author: ...... Jeff Nokes	
+# Last Modified By: ..... Tim Keefer
+# Last Modified: ........ 07/07/2008 @ 14:00
 #
 # Convert to UNIX lines
 #
@@ -15,9 +15,13 @@
 
 =pod
 
-=head1 eBay::API::XML::BaseXml
+=head1 NAME
 
-Configuration methods for XML-specific aspects of eBay::API.
+eBay::API::XML::BaseXml - Configuration methods for XML-specific aspects
+
+=head1 INHERITANCE
+
+eBay::API::XML::BaseXml inherits from the L<eBay::API::BaseApi> class
 
 =head1 DESCRIPTION
 
@@ -27,8 +31,6 @@ parent class wrapper to the classes eBay::API::XML::Session, and the
 various call classes.
 
 =cut
-
-
 
 # Package Declaration
 # --------------------------------------------------------------------------
@@ -47,11 +49,10 @@ use Data::Dumper;             # Used for logging support.
 # Constants
 use constant TRUE    => scalar 1;
 use constant FALSE   => scalar 0;
-#use constant VERSION => scalar "0.10";   # Depracated.
+use constant VERSION => scalar "0.10";
 
 # Global Variables
-our $VERSION = '0.01';    # Version of this module.
-
+our $VERSION = VERSION;       # The version of this class/module.
 our @ISA = ("Exporter",
 	    "eBay::API::BaseApi");     # Need to sub the Exporter class, to use the EXPORT* arrays below.
 

@@ -1,15 +1,14 @@
 Revision history for Perl extension eBay::API.
 
+0.23 Sun Aug 24 20:17:17 PDT 2008
+    - add generated code to CPAN distribution
+    - add local xsd file support to Makefile.PL
+      This change allows someone to specify local xsd file 
+      for the class generation.
+      
+      perl Makefile.PL --xsd_file=/tmp/my.xsd
+      
+0.01  Fri May 26 18:58:46 2006
+    - original version; created by h2xs 1.23 with options
+        -XA -n eBay::API
 
-0.21  Friday March 30, 2007 @ 23:10 PDT
-- Modified the auto-generation tool libraries to have the fully qualified
-  namespace 'eBay::API::XML::Tools::CodeGen::XSD::*'.
-
-
-0.21  Thursday March 29, 2007 @ 18:00 PDT
-- Finalized version 0.21 for release to public.  Checked into developer.ebay.com
-  Subversion codebase, and finished setting up project 'ebay-perl-api-sdk'.
-
-
-0.01  Friday May 26, 2006 @ 18:58 PDT
-- original version; created by h2xs 1.23 with options '-XA -n eBay::API'

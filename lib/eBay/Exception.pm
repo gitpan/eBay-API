@@ -6,13 +6,9 @@
 # File: ................. Exception.pm
 # Original Author: ...... Bob Bradley
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:13
+# Last Modified: ........ 03/21/2007 @ 17:05
 #
 #########################################################################
-
-
-# Globals
-  our $VERSION = '0.01';
 
 
 =pod

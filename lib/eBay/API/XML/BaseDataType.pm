@@ -6,16 +6,11 @@
 # File: ................. BaseDataType.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:21
+# Last Modified: ........ 03/06/2007 @ 16:47
 #
 ###############################################################################
 
 package eBay::API::XML::BaseDataType;
-
-
-# Globals
-  our $VERSION = '0.01';
-
 
 #
 # BUG FIXES:

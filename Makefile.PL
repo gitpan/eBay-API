@@ -57,9 +57,6 @@
     my $script_output;      # Stores the output from the autogen script
                             # execution below.
 
-  # The fully qualified URL to the latest eBay XSD.
-    my $latest_xsd = 'http://developer.ebay.com/webservices/latest/eBaySvc.xsd';
-
   # Path to the real autogeneration script.
     my $script_path = File::Spec->catfile(
                                            'lib',
@@ -87,7 +84,11 @@
     my $arg_authtoken;
     my $arg_usage;
     my $arg_help;
-
+    my $arg_verbose;
+    my $arg_api_url = 'https://api.sandbox.ebay.com/ws/api.dll';
+    my $arg_xsd = 'http://developer.ebay.com/webservices/latest/eBaySvc.xsd';
+    my $arg_xsd_file = '';
+    
   # Random scalar used for storing return values temporarily, can be used for
   # anything.
     my $rv;
@@ -129,13 +130,17 @@
 
 # Get any command line arguments provided by the user.
   Getopt::Long::GetOptions (
-     'noautogen' => \$arg_noautogen,
-     'appid=s'   => \$arg_appid,
-     'devid=s'   => \$arg_devid,
-     'certid=s'  => \$arg_certid,
+     'noautogen'   => \$arg_noautogen,
+     'verbose'     => \$arg_verbose,
+     'appid=s'     => \$arg_appid,
+     'devid=s'     => \$arg_devid,
+     'certid=s'    => \$arg_certid,
+     'api_url=s'   => \$arg_api_url,
      'authtoken=s' => \$arg_authtoken,
-     'usage'     => \$arg_usage,
-     'help'      => \$arg_help,
+     'usage'       => \$arg_usage,
+     'xsd=s'       => \$arg_xsd,
+     'xsd_file=s'  => \$arg_xsd_file,
+     'help'        => \$arg_help,
   );
 
 
@@ -171,8 +176,7 @@
         $arg_appid      &&
         $arg_devid      &&
         $arg_certid     &&
-        $arg_authtoken  &&
-        !$arg_noautogen
+        $arg_authtoken 
      )
      {# Create a system independent file path for the credentials file.
         my $credentials_file_path = File::Spec->catfile(
@@ -192,7 +196,11 @@
                         '$::arg_appid = \'' . $arg_appid . "';\n" .
                         '$::arg_devid = \'' . $arg_devid . "';\n" .
                         '$::arg_certid = \'' . $arg_certid . "';\n" .
-                        '$::arg_authtoken = \'' . $arg_authtoken . "';\n"
+                        '$::arg_authtoken = \'' . $arg_authtoken . "';\n" .
+                        '$::arg_api_url = \'' . $arg_api_url . "';\n" .
+                        '$::arg_verbose = \'' . $arg_verbose . "';\n" .
+                        '1;'
+                        
                      )
             )
            and
@@ -260,7 +268,28 @@
     # Makefile.PL, as the fully qualified URL to the XSD documentation.  We need
     # to use a system() call here, since we want to stay in this script post
     # fork() and execution, unlike exec().  `` will not give unbuffered output.
-      system("cd $script_path  &&  $^X $script_name --url=$latest_xsd");
+      my @gen_cmd = (
+        "cd $script_path",
+        "&&",
+        "$^X $script_name",
+      );
+      
+      if ( $arg_xsd_file ) {
+        die "Unable to locate local xsd file: $arg_xsd_file" 
+            if ! -e $arg_xsd_file;
+
+        push( @gen_cmd, "--file=$arg_xsd_file" );  
+      }
+      else {    
+        push( @gen_cmd, "--url=$arg_xsd" );
+      }
+   
+      print( 
+        "\nGenerating base classes -\n" 
+        . join( ' ', @gen_cmd ) 
+      );
+ 
+      system( join( ' ', @gen_cmd ) );
 
     # Print out some info to the user, that the auto-generation phase has completed.
       print(
@@ -338,7 +367,10 @@
 
        # The name of the package.
          NAME => 'eBay::API',
-
+       
+       # Tests
+         test => { TESTS => 't/*.t t/calls/*.t' },
+         
        # The version of the package.
          VERSION_FROM  => 'lib/eBay/API.pm',  #(uses $VERSION)
 
@@ -479,9 +511,12 @@ usage:
 
 perl  Makefile.PL  [any standard Perl options] \\
                    [--noautogen] \\
+                   [--xsd='<url to alternate xsd file>] \\
+                   [--xsd_file='<path to local xsd file>] \\
                    [--appid='<provided_from_eBay_devzone_registration>']  \\
                    [--devid='<provided_from_eBay_devzone_registration>']  \\
                    [--certid='<provided_from_eBay_devzone_registration>'] \\
+                   [--api_url='<alternate eBay api url>'] \\
                    [--authtoken='<your eBay Sandbox authtoken>' |
                                 `cat authtokenfilename`]                  \\
                    [--usage|--help]
@@ -490,12 +525,17 @@ Options:
    Standard ExtUtils::MakeMaker Options: (i.e. PREFIX=/usr/local/lib/perl)
    --noautogen:  Boolean used to tell script not to perform the
                  auto-generation of eBay call and datatype classes.
+   --verbose:    Boolean used to enable verbose logging   
+   --xsd:        URL of the eBay xsd schema file. Default xsd,
+                 http://developer.ebay.com/webservices/latest/eBaySvc.xsd
+   --xsd_file:   path to local xsd schema file.
    --appid:      String containing the AppID provided to you by the eBay
                  Developer's Program, upon registration.
    --devid:      String containing the DevID provided to you by the eBay
                  Developer's Program, upon registration.
    --certid:     String containing the CertID provided to you by the eBay
                  Deverloper's Program, upon registration.
+   --api_url:    URL to alternate eBay API location, defaults to the sandbox
    --authtoken:  String containing the authentication token provided to you by
                  the eBay Deverloper's Program, upon registration.
    --usage:      Displays usage of this script.

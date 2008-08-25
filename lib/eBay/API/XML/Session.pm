@@ -5,17 +5,21 @@
 # Module: ............... <user defined location>/eBay/API/XML
 # File: ................. Session.pm
 # Original Author: ...... Bob Bradley
-# Last Modified By: ..... Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:33
+# Last Modified By: ..... Robert Bradley / Jeff Nokes
+# Last Modified: ........ 03/06/2007 @ 16:25
 #
 # This class is used to control api calls made in parallel, offer some
 # transactional logic when executing the calls, as well as retries.
 #
 ##########################################################################
 
-=head1 eBay::API::XML::Session
+=head1 NAME
 
-Cluster and submit several eBay XML API calls at once.
+eBay::API::XML::Session - Cluster and submit several eBay XML API calls at once
+
+=head1 INHERITANCE
+
+eBay::API::XML::Session inherits from the L<eBay::API::XML::BaseXml> class
 
 =head1 DESCRIPTION
 
@@ -60,6 +64,7 @@ eBay XML API.
   my $itemarray = $getListingsCall->getSearchResultItemArray()->getSearchResultItem();
   my $officialtime = $pCall->getEBayOfficialTime();
   my $pUser = $getUserCall->getUser();
+  my $sEmail = $pUser->getEmail();
   my $sStatusCode = $pUser->getStatus();
   my $sSiteCode  = $pUser->getSite();
 
@@ -85,7 +90,6 @@ use eBay::API::XML::BaseXml;  # parent class
 use HTTP::Request;
 
 # Global Variables
-our $VERSION = '0.01';    # The version of this module.
 our @ISA = (
 	    'Exporter', 
 	    'eBay::API::XML::BaseXml',  # Parent class with logging framework

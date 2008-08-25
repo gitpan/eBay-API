@@ -1,28 +1,13 @@
 #!/usr/bin/perl -w
 
-##########################################################################
-#
-# Module: ............... <user defined location>/eBay/API/XML
-# File: ................. RequestDataType.pm
-# Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:30
-#
-##########################################################################
-
 package eBay::API::XML::RequestDataType;
 
 use strict;
 
 use Exporter;
 use eBay::API::XML::DataType::AbstractRequestType;
-
-# Globals
-our $VERSION = '0.01';    # The version of this module.
-
 our @ISA = ('Exporter'
 		, 'eBay::API::XML::DataType::AbstractRequestType');
-
 
 my @gaProperties = (  );
 push @gaProperties, 

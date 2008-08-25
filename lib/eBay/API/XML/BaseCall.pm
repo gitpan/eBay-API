@@ -2,11 +2,6 @@
 
 package eBay::API::XML::BaseCall;
 
-
-# Globals
-  our $VERSION = '0.01';
-
-
 use strict; 
 use warnings;
 
@@ -16,7 +11,7 @@ use warnings;
 # File: ................. BaseCall.pm
 # Original Author: ...... Milenko Milanovic
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:20
+# Last Modified: ........ 03/06/2007 @ 16:28
 #
 # Description: This is a super class for all eBay API calls. 
 #
@@ -29,7 +24,17 @@ use warnings;
 #
 ###############################################################################
 
-  # Need to sub the Exporter class, to use the EXPORT* arrays below.
+=head1 NAME
+
+eBay::API::XML::BaseCall
+
+=head1 INHERITANCE
+
+eBay::API::XML::BaseCall inherits from the L<eBay::API::XML::BaseCallGen> class
+
+=cut
+
+# Need to sub the Exporter class, to use the EXPORT* arrays below.
 use Exporter;
 use eBay::API::XML::BaseCallGen;   # parent class
 our @ISA = ('Exporter'
@@ -75,23 +80,22 @@ use constant XML_PARSE_RESULT_EMPTY => scalar 'XML_PARSE_RESULT_EMPTY';# API005
 
 use constant XML_OLD_TYPE_RESPONSE => scalar 'XML_OLD_TYPE_RESPONSE';
 
-=head1 Subroutines:
-
-=cut
+=head1 Methods
 
 =head2 new()
 
+See the parent constructor for detailed docs about object instantiation 
+
 =cut
 
-      
 sub new($;$;) {
 
    my $classname = shift;
    my $arg_hash = shift;
    my $self = $classname->SUPER::new($arg_hash);
 
-      # this allow me to introduce a "reset" method
-      #  which will allow as to reuse a call instance
+   # this allow me to introduce a "reset" method
+   #  which will allow as to reuse a call instance
    $self->_init();
 
    return $self;
@@ -121,7 +125,7 @@ sub _init {
 
 =head2 reset()
 
-Description: Use 'reset' method in cases when you want to reuse a Call instance
+Use 'reset' method in cases when you want to reuse a Call instance
 
 =cut
 
@@ -132,6 +136,8 @@ sub reset {
 
 
 =head2 execute()
+
+Executes the current API call
 
 =cut
 
@@ -163,10 +169,6 @@ sub execute {
   $self->_submitHttpRequest( $objUserAgent, $objRequest );
 
 }
-  
-=head2 _getHttpRequestObject()
-
-=cut
 
 sub _getHttpRequestObject {
 	
@@ -291,10 +293,6 @@ sub _submitHttpRequest($$$;) {
   }   ## END retry LOOP
 }
 
-=head2 _getRequestHeader()
-
-=cut
-
 sub _getRequestHeader {
   
   my $self = shift;
@@ -342,6 +340,8 @@ sub _setRequestDataType {
 
 =head2 getRequestDataType()
 
+Returns the RequestDataType object, 
+
 =cut
 
 sub getRequestDataType {
@@ -356,6 +356,7 @@ sub _setResponseDataType {
 
 =head2 getResponseDataType()
 
+Returnst the ResponseDataType object
 =cut
 
 sub getResponseDataType {
@@ -363,18 +364,10 @@ sub getResponseDataType {
   return $self->{'pResponse'};
 }
 
-=head2 _setHttpResponseObject()
-
-=cut
-
 sub _setHttpResponseObject {
   my $self = shift;
   $self->{'pHttpResponse'} = shift;
 }
-
-=head2 _getHttpResponseObject()
-
-=cut
 
 sub _getHttpResponseObject {
   my $self = shift;
@@ -398,6 +391,11 @@ sub isHttpRequestSubmitted {
 }
 
 =head2 getHttpResponseAsString()
+
+Method returning a textual representation of the response
+
+  Arguments: 1 [O] - isPrettyPrint - if set then XML is pretty printed
+  Returns: string
 
 =cut
 
@@ -427,6 +425,8 @@ sub getHttpResponseAsString {
 
 =head2 getResponseRawXml()
 
+Method returning the raw XML reponse
+
 =cut
 
 sub getResponseRawXml {
@@ -444,12 +444,6 @@ sub getResponseRawXml {
   return $str;
 }
 
-=head2 _setXmlSimpleDataStructure()
-
-Keep XML::Simple data structure after parsing the response XML
-
-=cut
-
 sub _setXmlSimpleDataStructure {
   my $self = shift;
   $self->{'rhXmlSimple'} = shift;
@@ -464,10 +458,11 @@ the top level node and ending with lowest level node.
 Path IS NOT an XPATH string!!!!
 
 Path examples for VerifyAddItem call:
-@path = ( 'Fees','Fee' );   # Returns fees as an XML::Simple data structure
-@path = ( 'Errors' );       # Returns Response errors as an XML::Simple 
-                            #    data structure
-@path = ( 'Errors-xxxx' );  # Will not find anything
+  
+  @path = ( 'Fees','Fee' );   # Returns fees as an XML::Simple data structure
+  @path = ( 'Errors' );       # Returns Response errors as an XML::Simple 
+                              #    data structure
+  @path = ( 'Errors-xxxx' );  # Will not find anything
 
 Notice that root node is not being specified. The reason for that is that 
 we XML::Simple is configured not to put root node into its data structure
@@ -497,12 +492,8 @@ sub getXmlSimpleDataStructure {
   return $rhNode;
 }
 
-=head2 _setResponseValidXml()
-
-Access: private
-Sets whether a response is a valid XML document or not.
-
-=cut 
+# _setResponseValidXml()
+# Sets whether a response is a valid XML document or not.
 
 sub _setResponseValidXml {
   my $self = shift;
@@ -565,6 +556,8 @@ sub hasErrors {
 
 =head2 hasWarnings()
 
+Return true if the API has errors.
+
 =cut
 
 sub hasWarnings {
@@ -589,6 +582,8 @@ sub getErrors {
 
 =head2 getWarnings()
 
+Return a reference to an array of warnings
+
 =cut
 
 sub getWarnings {
@@ -597,10 +592,7 @@ sub getWarnings {
 	  eBay::API::XML::DataType::Enum::SeverityCodeType::Warning);
 }
 
-=head2 _hasErrorsForSeverityCode()
-
-=cut
-
+# _hasErrorsForSeverityCode()
 sub _hasErrorsForSeverityCode {
 
   my $self = shift;	
@@ -627,10 +619,7 @@ sub _hasErrorsForSeverityCode {
   return $hasErrors;
 }
 
-=head2 _getErrorsForSeverityCode()
-
-=cut
-
+# _getErrorsForSeverityCode()
 sub _getErrorsForSeverityCode {
 
   my $self = shift;	
@@ -652,6 +641,7 @@ sub _getErrorsForSeverityCode {
 =head2 getErrorsAndWarnings() 
 
 Returns: reference to an array
+
 Array contains all errors returned by API call, regardless of SeverityCode
 Includes both SeverityCodes: 'Error' and 'Warning'
 
@@ -662,8 +652,6 @@ sub getErrorsAndWarnings() {
   return $self->_getResponseErrors();
 }
 
-=pod
-
 =head2 hasError() 
 
 Arguments: [0] [R] - errorCode
@@ -671,8 +659,9 @@ Arguments: [0] [R] - errorCode
 Returns:    1 - if an error with the given error code is found
             0 - if no error with the given error code is returned
 
+  my $boolean = $self->hasError( '304' );
+  
 =cut
-
 
 sub hasError {
 	
@@ -691,20 +680,11 @@ sub hasError {
    return $yes;
 }
 
-
-###############################################################################
-# Request setters(only): input values  
-###############################################################################
-
-
 ###############################################################################
 # Response getters(only): output values  
 ###############################################################################
 
-=head2 getResponsErrors()
-
-=cut
-
+# _getResponsErrors()
 #      
 # type: 'ns:ErrorType'
 #    setter expects: array or reference to an array 
@@ -719,6 +699,10 @@ sub _getResponseErrors {
 
 =head2 getEBayOfficialTime()
 
+Returns the officaial eBay time.
+
+  2008-07-03T23:46:36.234Z
+  
 =cut
 
 #      
@@ -734,14 +718,12 @@ sub getEBayOfficialTime {
 # Methods
 ###############################################################################
 
-=head2 _prettyPrintFormat()
-
-Arguments: 1 [R] pHttpR - either an HTTP::Request or HTTP:Response object
-Description: Formats HTTP::Request/HTTP::Response as a string.
-            Includes: header and content.
-            XML content is pretty printed.
-
-=cut 
+# _prettyPrintFormat()
+#
+# Arguments: 1 [R] pHttpR - either an HTTP::Request or HTTP:Response object
+# Description: Formats HTTP::Request/HTTP::Response as a string.
+#            Includes: header and content.
+#            XML content is pretty printed.
 
 sub _prettyPrintFormat {
 
@@ -768,7 +750,31 @@ sub _prettyPrintFormat {
 }
 
 =head2 setRequestRawXml()
+  
+Method for setting some raw xml content to be used for the request.
 
+  my $call = new eBay::API::XML::Call::FetchToken(
+      site_id => 0,
+      proxy   => __API_URL__,
+      dev_id  => __DEVELOPER_ID__,
+      app_id  => __APPLICATION_ID__,
+      cert_id => __CERT_ID__,
+      user_auth_token => __AUTH_TOKEN__, 
+  );
+  
+  $call->setRequestRawXml('<?xml version="1.0" encoding="UTF-8"?>
+      <FetchTokenRequest xmlns="urn:ebay:apis:eBLBaseComponents">
+      <SecretID>
+        R2n6MQr@LDMAABeDFY8.1025449191.1198127665.563330
+      </SecretID>
+      <RequesterCredentials><Username>__USERNAME__</Username>
+      </RequesterCredentials>
+      </FetchTokenRequest>'
+  );
+
+  $call->execute();
+  print $call->getResponseRawXml();
+  
 =cut
 
 sub setRequestRawXml {
@@ -778,9 +784,10 @@ sub setRequestRawXml {
 
 =head2 getRequestRawXml()
 
+Method returning the raw XML request content
+
 =cut
 
-# Protected
 sub getRequestRawXml {
  
   my $self = shift;
@@ -821,10 +828,7 @@ sub getRequestRawXml {
   return $strXml;
 }
 
-=head2 _initRequest()
-
-=cut
-
+# _initRequest()
 sub _initRequest {  
 
   my $self = shift;
@@ -842,10 +846,7 @@ sub _initRequest {
    $self->_setRequestDataType($pRequest);
 }
 
-=head2 _initResponse()
-
-=cut
-
+# _initResponse()
 sub _initResponse {  
 
   my $self = shift;
@@ -865,8 +866,17 @@ sub _initResponse {
 
 =head2 forceError()
 
+This method is used to force a given error when a call is being executed.
+If the forced error is set, then that error is being returned by the call
+without executing the call (sending request to the API Server and receiving 
+the response.
+
+This method is used for test purposes when a programmer wants to test
+how the application handles an API error.
+
 Arguments: This method uses named argument calling style that looks like this:
-            $self->forceError ( sErrorCode => '1025', sShortMsg => 'Test API error', ... );
+            
+  $self->forceError ( sErrorCode => '1025', sShortMsg => 'Test API error', ... );
 
        Required arguments
            1 - sErrorCode - API error code
@@ -881,18 +891,12 @@ Arguments: This method uses named argument calling style that looks like this:
                      eBay::API::XML::DataType::Enum::ErrorClassificationCodeType::SystemError
 
 Example:
-          $call->forceError (
-                        'sErrorCode' => '1025'
-                        ,'sShortMsg' => 'Test error short message'
-                        ,'sLongMsg' => 'Test error long message'
-                            );
-
-Description: This method is used to force a given error when a call is being executed.
-             If the forced error is set, then that error is being returned by the call
-             without executing the call (sending request to the API Server and receiving 
-             the response.
-             This method is used for test purposes when a programmer wants to test
-             how the application handles an API error.
+  
+  $call->forceError (
+    'sErrorCode' => '1025'
+    ,'sShortMsg' => 'Test error short message'
+    ,'sLongMsg' => 'Test error long message'
+  );
 
 =cut 
 
@@ -928,53 +932,18 @@ sub hasForcedError {
     return $self->{'hasForcedError'};
 }
 
-#### 
-#  methods that HAVE TO BE IMPLEMENTED IN each specific API CALL
-####
-
-=head2 getApiCallName()
-
-An abstract method - it has to be implemented in a class extending BaseCall class
-
-=cut
-
-sub getApiCallName {
-   return undef;
-}
-
-=head2 getRequestDataTypeFullPackage()
-
-An abstract method - it has to be implemented in a class extending BaseCall class
-
-=cut
-
-sub getRequestDataTypeFullPackage {
-  return undef; 
-}
-
-=head2 getResponseDataTypeFullPackage()
-
-An abstract method - it has to be implemented in a class extending BaseCall class
-
-=cut
-
-sub getResponseDataTypeFullPackage {
-  return undef; 
-}
-
 =head2 processResponse()
 
-#      RESPONSE
+Method resonsible for process the http response when it arrives.
 
 =cut
 
 sub processResponse {
-
    my $self = shift;
    my $objHttpResponse = shift;
 
-      # 1. retrieve response content
-      #    if gziped - unzip it
+   # 1. retrieve response content
+   #    if gziped - unzip it
    my $contentEncoding = $objHttpResponse->content_encoding;
    my $sRawXml= $objHttpResponse->content();
    if (defined $contentEncoding && $contentEncoding =~ /gzip/i) {
@@ -1077,10 +1046,7 @@ sub processResponse {
    } 
 }
 
-=head2 _handleNoResponseContent()
-
-=cut
-
+# _handleNoResponseContent()
 sub _handleNoResponseContent {
 
    my $self     = shift;
@@ -1104,10 +1070,7 @@ sub _handleNoResponseContent {
    return $ok;
 }
 
-=head2 _handleApiBadGataway()
-
-=cut
-
+# _handleApiBadGataway()
 sub _handleApiBadGataway {
 
    my $self     = shift;
@@ -1140,10 +1103,7 @@ sub _handleApiBadGataway {
    return $ok;
 }
 
-=head2 _handleResposeParsedButStructureEmpty()
-
-=cut
-
+# _handleResposeParsedButStructureEmpty()
 sub _handleResposeParsedButStructureEmpty {
 
    my $self        = shift;
@@ -1184,10 +1144,7 @@ sub _handleResposeParsedButStructureEmpty {
    return $ok;
 }
 
-=head2 _addHTTP_XMLParse_Error()
-
-=cut
-
+# _addHTTP_XMLParse_Error()
 sub _addHTTP_XMLParse_Error {
    my $self = shift;
    my %args = @_;
@@ -1206,10 +1163,7 @@ sub _addHTTP_XMLParse_Error {
    $self->_addError( $pError );			     
 }
 
-=head2 _populateHTTP_XMLParse_Error()
-
-=cut
-
+# _populateHTTP_XMLParse_Error()
 sub _populateHTTP_XMLParse_Error {
 
    my %args = @_;
@@ -1231,10 +1185,7 @@ sub _populateHTTP_XMLParse_Error {
 			     );
 }
 
-=head2 _handleIfItIsOldStyle()
-
-=cut
-
+# _handleIfItIsOldStyle()
 sub _handleIfItIsOldStyle {
 
    my $self = shift;
@@ -1260,6 +1211,7 @@ sub _handleIfItIsOldStyle {
 
             my $shortMsg = 'old type XML response';
             my $longMsg = <<"OLD_TYPE";
+
 Old type response, most likely:
 a) an empty string sent as a request
 b) a very incomplete XML string sent as a request
@@ -1284,6 +1236,40 @@ OLD_TYPE
    }
 
    return $ok;
+}
+
+=head1 ABSTRACT METHODS 
+
+Methods that HAVE TO BE IMPLEMENTED IN each specific API CALL
+
+=head2 getApiCallName()
+
+An abstract method - it has to be implemented in a class extending BaseCall class
+
+=cut
+
+sub getApiCallName {
+   return undef;
+}
+
+=head2 getRequestDataTypeFullPackage()
+
+An abstract method - it has to be implemented in a class extending BaseCall class
+
+=cut
+
+sub getRequestDataTypeFullPackage {
+  return undef; 
+}
+
+=head2 getResponseDataTypeFullPackage()
+
+An abstract method - it has to be implemented in a class extending BaseCall class
+
+=cut
+
+sub getResponseDataTypeFullPackage {
+  return undef; 
 }
 
 1;

@@ -7,7 +7,7 @@
 # Original Author: ...... Milenko Milanovic 
 #                          (based on CallRetry.java written by Weijun Li)
 # Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:25
+# Last Modified: ........ 03/06/2007 @ 16:26
 #
 ##########################################################################
 
@@ -42,8 +42,6 @@ use Data::Dumper;
 # --------------------------------------------------------------------------
 
 # Global Variables
-our $VERSION = '0.01';    # Version of this module.
-
 our @ISA = ("Exporter");
 
 use HTTP::Status;

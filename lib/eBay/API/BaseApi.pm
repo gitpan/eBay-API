@@ -6,17 +6,21 @@
 # File: ................. BaseApi.pm
 # Original Authors: ..... Jeff Nokes / Bob Bradley
 # Last Modified By: ..... Jeff Nokes
-# Last Modified: ........ 03/30/2007 @ 18:17
+# Last Modified: ........ 03/15/2007 @ 14:46
 #
 #########################################################################
 
 
 =pod
 
-=head1 eBay::API::BaseApi
+=head1 NAME
 
-Logging, exception handling and authentication frameworks for
-eBay::API objects.
+eBay::API::BaseApi - Logging, exception handling and authentication frameworks 
+for eBay::API objects.
+
+=head1 INHERITANCE
+
+This is the base class
 
 =head1 DESCRIPTION
 
@@ -78,7 +82,7 @@ use constant DEFAULT_EBAY_API_TIMEOUT => 20;
 
 
 # Global Variables
-our $VERSION = '0.01';
+our $VERSION = $API::VERSION;    # The version of this class/module, as well as the entire pkg.
 our $ERROR;                      # Most recent errors.
 
 our @ISA = ("Exporter");   # Need to sub the Exporter class, to use the EXPORT* arrays below.
@@ -166,7 +170,304 @@ sub getTimeout($;);                   #         Public                Instance
 # Subroutine Definitions
 # ---------------------------------------------------------------------------
 
+=head2 new()
 
+Object constructor for the eBay::API::XML::Session class.  This is
+basically a wrapper around the CPAN LWP::Paralle module.
+
+  my $call = eBay::API::XML::Session->new(
+      site_id => 0,
+      proxy   => 'https://api.ebay.com/ws/api.dll',
+      dev_id  => __DEVELOPER_ID__,
+      app_id  => __APPLICATION_ID__,
+      cert_id => __CERT_ID__,
+      user_auth_token => __AUTH_TOKEN__, 
+  );
+    
+  or
+  
+  my $call = eBay::API::XML::Call::GeteBayOfficialTime->new(
+      site_id => 0,
+      proxy   => 'https://api.ebay.com/ws/api.dll',
+      dev_id  => __DEVELOPER_ID__,
+      app_id  => __APPLICATION_ID__,
+      cert_id => __CERT_ID__,
+      user_auth_token => __AUTH_TOKEN__, 
+  );
+    
+  $call->execute();            
+  print $call->getEBayOfficialTime();      
+    
+Usage:
+
+=over 4
+
+=item *
+
+eBay::API::XML::Session->new({args})
+
+=item *
+
+eBay::API::XML::Session::new("eBay::API::XML::Request", {args} )
+
+=back
+
+Arguments:
+
+=over 4
+
+=item *
+
+The name  of this class/package.
+
+=item *
+
+A hash reference containing the following possible arguments:
+
+=over 8
+
+=item *
+
+B<site_id> => Scalar representing the eBay site id of the XML API
+calls.  Setting the site id at the session level will provide a
+default site id for all API calls bundled into a session.  The site id
+for individual calls may still be overridden when the respective
+request objects are instantiated.
+
+If this value is not provided, it will attempt to use
+the value in the environment variable $EBAY_API_SITE_ID;
+
+=item *
+
+B<dev_id> => Scalar representing the Developer ID provided to the user
+by eBay.  The developer ID is unique to each licensed developer (or
+company). By default this will be taken from the environment variable
+$EBAY_API_DEV_ID, but it can be overridden here or via the setDevID()
+class method.
+
+=item *
+
+B<app_id> => Scalar representing the Application ID provided to the
+user by eBay.  The application ID is unique to each application
+created by the developer. By default this will be taken from the
+environment variable $EBAY_API_APP_ID, but it can be overridden here
+or via the setAppID() class method.
+
+=item *
+
+B<cert_id> => Scalar representing the Certification ID provided to the
+user by eBay.  The certificate ID is unique to each application
+created by the developer. By default this will be taken from the
+environment variable $EBAY_API_CERT_ID, but it can be overridden here
+or via the setCertID() class method.
+
+=item *
+
+B<user_name> => Scalar representing the application level user name
+for this session.  This may be overriden for each bundled call in the
+session.
+
+=item *
+
+B<user_password> => Scalar reprsenting the application level user
+password for this session.  This may be overriden for each bundled
+call in the session.
+
+=item *
+
+B<user_auth_token> => Scalar representing the auth token for the
+application level user.
+
+=item *
+
+B<api_ver> => Scalar representing the eBay webservices API version the
+user wishes to utilize.  If this is not set here, it is taken from the
+environment variable $EBAY_API_VERSION, which can be overridden via
+the class method setVersion().
+
+=item *
+
+B<proxy> => Scalar representing the eBay transport URL needed to send
+the request to.  If this is not set here, it must be set via the
+setProxy() class method, prior to object instantiation.
+
+# Deprecated
+#=item *
+#
+#B<debug> => Boolean.  TRUE means we'll want debugging for the
+#request/response.  FALSE means no debugging.
+
+# Deprecated
+#=item *
+#
+#B<err_lang> => Value for the error language you would like returned to
+#you for any XML/webservice errors encountered.  By design, if this
+#value is not provided, eBay will return en-US as the default error
+#language value.  This can be set at the class level via the
+#setErrLang() method, and retrieved from the getErrLang() method.  It
+#can also be set for a particular instance with the instance
+#getter/setter method errLang().
+
+=item *
+
+B<compatibility_level> => This value is defined as a default in each
+release of the api.  But if you need to override the default value,
+you can do this either when you instatiate your session object, or by
+using the setter method setCompatibilityLevel().
+
+=item *
+
+B<sequential> => Boolean value to indicate if the requests should be
+issued sequentially if true, and in parallel if false (default).  This
+may also be set with the setter method setExecutionSequential().
+
+=item *
+
+B<timeout> => Scalar numerical value indicating the number of seconds to
+wait on an http request before timing out.  Setting this to 0 will cause
+the requests to block.  Otherwise the default is that of LWP::UserAgent.
+This may also be set with the instance setter method setTimeout();
+
+=back
+
+=back
+
+Returns:
+
+=over 4
+
+=item *
+
+B<success>  Object reference to the eBay::API::XML::Session class.
+
+=item *
+
+B<failure>  undefined
+
+=back
+
+=cut
+
+sub new($;$) {
+
+  # Get all arguments passed in.
+  my($class, $arg_hash) = @_;
+
+  # Validation
+  eBay::API::BaseApi::_check_arg($class, Params::Validate::SCALAR);
+
+
+  # Local Variables
+  my $self = {};          # This object to be blessed.
+
+  # We want to immediately bless ourselves into this __PACKAGE__ so we
+  # can start setting object attributes right away, and use any
+  # available instance methods.
+  bless($self, $class);
+
+
+  if (defined $ENV{EBAY_LOG_LEVEL} && $ENV{EBAY_LOG_LEVEL} && $ENV{EBAY_LOG_LEVEL} > 0 ) {
+    $LOG_LEVEL = $ENV{EBAY_LOG_LEVEL};
+  }# end if
+
+  if (defined $::RALF and $::RALF) {
+    $LOG_FILE_HANDLE = $::RALF;
+  }# end if
+
+  if ( $ENV{EBAY_API_COMPATIBILITY_LEVEL} ) {
+    $self->{compatibility_level} = $ENV{EBAY_API_COMPATIBILITY_LEVEL};
+  } else {
+    $self->{compatibility_level} = DEFAULT_API_COMPATIBILITY_LEVEL;
+  }
+
+  if ( $ENV{EBAY_API_SITE_ID}) {
+    $self->{site_id} = $ENV{EBAY_API_SITE_ID};
+  } else {
+    $self->{site_id} = DEFAULT_EBAY_SITE_ID;
+  }
+
+  $self->{dev_id} = $ENV{EBAY_API_DEV_ID};
+  $self->{app_id} = $ENV{EBAY_API_APP_ID};
+  $self->{cert_id} = $ENV{EBAY_API_CERT_ID};
+  $self->{user_name} = $ENV{EBAY_API_USER_NAME};
+  $self->{user_password} = $ENV{EBAY_API_USER_PASSWORD};
+  $self->{user_auth_token} = $ENV{EBAY_API_USER_AUTH_TOKEN};
+  $self->{proxy} = $ENV{EBAY_API_XML_TRANSPORT};
+
+# Deprecated
+#  if ($ENV{EBAY_API_XML_ERR_LANG}) {
+#    $self->{err_lang} = $ENV{EBAY_API_XML_ERR_LANG};
+#  } else  {
+#    $self->{err_lang} = DEFAULT_EBAY_ERROR_LANGUAGE;
+#  }
+
+# Deprecated
+#  if ($ENV{EBAY_API_URI} ) {
+#    $self->{xml_uri} = $ENV{EBAY_API_URI};
+#  } else {
+#    $self->{xml_uri} = DEFAULT_EBAY_URI;
+#  }
+
+  if ($ENV{EBAY_API_VERSION} ) {
+    $self->{api_ver} = $ENV{EBAY_API_VERSION};
+  } else {
+    $self->{api_ver} = DEFAULT_EBAY_API_VERSION;
+  }
+
+  if ($ENV{EBAY_API_TIMEOUT} ) {
+    $self->{timeout} = $ENV{EBAY_API_TIMEOUT};
+  } else {
+    $self->{timeout} = DEFAULT_EBAY_API_TIMEOUT;
+  }
+
+  # Before we start setting local variables assuming we have an
+  # $arg_hash, validate that we actaully do have one.  If we have an
+  # argument but it's not a hash reference, set/log $ERROR and return
+  # failure to the caller.  If we have a valid hash reference argument,
+  # attempt to set the appropriate object attributes.
+  if (defined($arg_hash) ) {
+    eBay::API::BaseApi::_check_arg($arg_hash, Params::Validate::HASHREF);
+  }# end if
+
+  if    (defined($arg_hash)  &&  (ref($arg_hash) =~ /HASH/o))
+    {
+      if ($arg_hash->{site_id})         {$self->{site_id}     = $arg_hash->{site_id};}
+      if ($arg_hash->{dev_id})          {$self->{dev_id}      = $arg_hash->{dev_id};}
+      if ($arg_hash->{app_id})          {$self->{app_id}      = $arg_hash->{app_id};}
+      if ($arg_hash->{cert_id})         {$self->{cert_id}     = $arg_hash->{cert_id};}
+      #if ($arg_hash->{xml_uri})         {$self->{xml_url}     = $arg_hash->{xml_uri};}               # Deprecated
+      if ($arg_hash->{user_name})       {$self->{user_name}   = $arg_hash->{user_name};}
+      if ($arg_hash->{user_password})   {$self->{user_password} = $arg_hash->{user_password};}
+      if ($arg_hash->{user_auth_token}) {$self->{user_auth_token} = $arg_hash->{user_auth_token};}
+      if ($arg_hash->{api_ver})         {$self->{api_ver}     = $arg_hash->{api_ver};}
+      #if ($arg_hash->{err_lang})        {$self->{err_lang}    = $arg_hash->{err_lang};}              # Deprecated
+      if ($arg_hash->{proxy})           {$self->{proxy}       = $arg_hash->{proxy};}
+      if ($arg_hash->{debug})           {$self->{debug}       = $arg_hash->{debug};}
+      if ($arg_hash->{timeout})         {$self->{timeout}     = $arg_hash->{timeout};}
+      if ($arg_hash->{compatibility_level}) {
+         $self->{compatibility_level}  = $arg_hash->{compatibility_level};
+      }# end if
+
+    }# end if
+
+
+  # Else-if we have an $arg_hash but it isn't a hash reference,
+  # set/log $ERROR and return failure to the caller.
+  elsif (defined($arg_hash)  &&  (ref($arg_hash) !~ /HASH/o)) {
+    return(undef());
+  }# end elsif
+
+  # Else, assume the caller doesn't want to set any object attributes.
+  else  {}  # end else
+
+  # Add an error attribute to always contain the most recent error data in scalar form.
+  $API::ERROR = $self->{error} = '';
+
+
+  # If we've gotten this far, we have a class (we hope), return success to the caller.
+  return($self);
+
+}# end sub new()
 
 =head2 setLogHeader()
 
@@ -2399,286 +2700,6 @@ True if compression is enabled; false if it is not
 
     return $self->{compression};
   }
-
-
-=head2 new()
-
-Object constructor for the eBay::API::XML::Session class.  This is
-basically a wrapper around the CPAN LWP::Paralle module.
-
-Usage:
-
-=over 4
-
-=item *
-
-eBay::API::XML::Session->new({args})
-
-=item *
-
-eBay::API::XML::Session::new("eBay::API::XML::Request", {args} )
-
-=back
-
-Arguments:
-
-=over 4
-
-=item *
-
-The name  of this class/package.
-
-=item *
-
-A hash reference containing the following possible arguments:
-
-=over 8
-
-=item *
-
-B<site_id> => Scalar representing the eBay site id of the XML API
-calls.  Setting the site id at the session level will provide a
-default site id for all API calls bundled into a session.  The site id
-for individual calls may still be overridden when the respective
-request objects are instantiated.
-
-If this value is not provided, it will attempt to use
-the value in the environment variable $EBAY_API_SITE_ID;
-
-=item *
-
-B<dev_id> => Scalar representing the Developer ID provided to the user
-by eBay.  The developer ID is unique to each licensed developer (or
-company). By default this will be taken from the environment variable
-$EBAY_API_DEV_ID, but it can be overridden here or via the setDevID()
-class method.
-
-=item *
-
-B<app_id> => Scalar representing the Application ID provided to the
-user by eBay.  The application ID is unique to each application
-created by the developer. By default this will be taken from the
-environment variable $EBAY_API_APP_ID, but it can be overridden here
-or via the setAppID() class method.
-
-=item *
-
-B<cert_id> => Scalar representing the Certification ID provided to the
-user by eBay.  The certificate ID is unique to each application
-created by the developer. By default this will be taken from the
-environment variable $EBAY_API_CERT_ID, but it can be overridden here
-or via the setCertID() class method.
-
-=item *
-
-B<user_name> => Scalar representing the application level user name
-for this session.  This may be overriden for each bundled call in the
-session.
-
-=item *
-
-B<user_password> => Scalar reprsenting the application level user
-password for this session.  This may be overriden for each bundled
-call in the session.
-
-=item *
-
-B<user_auth_token> => Scalar representing the auth token for the
-application level user.
-
-=item *
-
-B<api_ver> => Scalar representing the eBay webservices API version the
-user wishes to utilize.  If this is not set here, it is taken from the
-environment variable $EBAY_API_VERSION, which can be overridden via
-the class method setVersion().
-
-=item *
-
-B<proxy> => Scalar representing the eBay transport URL needed to send
-the request to.  If this is not set here, it must be set via the
-setProxy() class method, prior to object instantiation.
-
-# Deprecated
-#=item *
-#
-#B<debug> => Boolean.  TRUE means we'll want debugging for the
-#request/response.  FALSE means no debugging.
-
-# Deprecated
-#=item *
-#
-#B<err_lang> => Value for the error language you would like returned to
-#you for any XML/webservice errors encountered.  By design, if this
-#value is not provided, eBay will return en-US as the default error
-#language value.  This can be set at the class level via the
-#setErrLang() method, and retrieved from the getErrLang() method.  It
-#can also be set for a particular instance with the instance
-#getter/setter method errLang().
-
-=item *
-
-B<compatibility_level> => This value is defined as a default in each
-release of the api.  But if you need to override the default value,
-you can do this either when you instatiate your session object, or by
-using the setter method setCompatibilityLevel().
-
-=item *
-
-B<sequential> => Boolean value to indicate if the requests should be
-issued sequentially if true, and in parallel if false (default).  This
-may also be set with the setter method setExecutionSequential().
-
-=item *
-
-B<timeout> => Scalar numerical value indicating the number of seconds to
-wait on an http request before timing out.  Setting this to 0 will cause
-the requests to block.  Otherwise the default is that of LWP::UserAgent.
-This may also be set with the instance setter method setTimeout();
-
-=back
-
-=back
-
-Returns:
-
-=over 4
-
-=item *
-
-B<success>  Object reference to the eBay::API::XML::Session class.
-
-=item *
-
-B<failure>  undefined
-
-=back
-
-=cut
-
-
-
-sub new($;$) {
-
-  # Get all arguments passed in.
-  my($class, $arg_hash) = @_;
-
-  # Validation
-  eBay::API::BaseApi::_check_arg($class, Params::Validate::SCALAR);
-
-
-  # Local Variables
-  my $self = {};          # This object to be blessed.
-
-  # We want to immediately bless ourselves into this __PACKAGE__ so we
-  # can start setting object attributes right away, and use any
-  # available instance methods.
-  bless($self, $class);
-
-
-  if (defined $ENV{EBAY_LOG_LEVEL} && $ENV{EBAY_LOG_LEVEL} && $ENV{EBAY_LOG_LEVEL} > 0 ) {
-    $LOG_LEVEL = $ENV{EBAY_LOG_LEVEL};
-  }# end if
-
-  if (defined $::RALF and $::RALF) {
-    $LOG_FILE_HANDLE = $::RALF;
-  }# end if
-
-  if ( $ENV{EBAY_API_COMPATIBILITY_LEVEL} ) {
-    $self->{compatibility_level} = $ENV{EBAY_API_COMPATIBILITY_LEVEL};
-  } else {
-    $self->{compatibility_level} = DEFAULT_API_COMPATIBILITY_LEVEL;
-  }
-
-  if ( $ENV{EBAY_API_SITE_ID}) {
-    $self->{site_id} = $ENV{EBAY_API_SITE_ID};
-  } else {
-    $self->{site_id} = DEFAULT_EBAY_SITE_ID;
-  }
-
-  $self->{dev_id} = $ENV{EBAY_API_DEV_ID};
-  $self->{app_id} = $ENV{EBAY_API_APP_ID};
-  $self->{cert_id} = $ENV{EBAY_API_CERT_ID};
-  $self->{user_name} = $ENV{EBAY_API_USER_NAME};
-  $self->{user_password} = $ENV{EBAY_API_USER_PASSWORD};
-  $self->{user_auth_token} = $ENV{EBAY_API_USER_AUTH_TOKEN};
-  $self->{proxy} = $ENV{EBAY_API_XML_TRANSPORT};
-
-# Deprecated
-#  if ($ENV{EBAY_API_XML_ERR_LANG}) {
-#    $self->{err_lang} = $ENV{EBAY_API_XML_ERR_LANG};
-#  } else  {
-#    $self->{err_lang} = DEFAULT_EBAY_ERROR_LANGUAGE;
-#  }
-
-# Deprecated
-#  if ($ENV{EBAY_API_URI} ) {
-#    $self->{xml_uri} = $ENV{EBAY_API_URI};
-#  } else {
-#    $self->{xml_uri} = DEFAULT_EBAY_URI;
-#  }
-
-  if ($ENV{EBAY_API_VERSION} ) {
-    $self->{api_ver} = $ENV{EBAY_API_VERSION};
-  } else {
-    $self->{api_ver} = DEFAULT_EBAY_API_VERSION;
-  }
-
-  if ($ENV{EBAY_API_TIMEOUT} ) {
-    $self->{timeout} = $ENV{EBAY_API_TIMEOUT};
-  } else {
-    $self->{timeout} = DEFAULT_EBAY_API_TIMEOUT;
-  }
-
-  # Before we start setting local variables assuming we have an
-  # $arg_hash, validate that we actaully do have one.  If we have an
-  # argument but it's not a hash reference, set/log $ERROR and return
-  # failure to the caller.  If we have a valid hash reference argument,
-  # attempt to set the appropriate object attributes.
-  if (defined($arg_hash) ) {
-    eBay::API::BaseApi::_check_arg($arg_hash, Params::Validate::HASHREF);
-  }# end if
-
-  if    (defined($arg_hash)  &&  (ref($arg_hash) =~ /HASH/o))
-    {
-      if ($arg_hash->{site_id})         {$self->{site_id}     = $arg_hash->{site_id};}
-      if ($arg_hash->{dev_id})          {$self->{dev_id}      = $arg_hash->{dev_id};}
-      if ($arg_hash->{app_id})          {$self->{app_id}      = $arg_hash->{app_id};}
-      if ($arg_hash->{cert_id})         {$self->{cert_id}     = $arg_hash->{cert_id};}
-      #if ($arg_hash->{xml_uri})         {$self->{xml_url}     = $arg_hash->{xml_uri};}               # Deprecated
-      if ($arg_hash->{user_name})       {$self->{user_name}   = $arg_hash->{user_name};}
-      if ($arg_hash->{user_password})   {$self->{user_password} = $arg_hash->{user_password};}
-      if ($arg_hash->{user_auth_token}) {$self->{user_auth_token} = $arg_hash->{user_auth_token};}
-      if ($arg_hash->{api_ver})         {$self->{api_ver}     = $arg_hash->{api_ver};}
-      #if ($arg_hash->{err_lang})        {$self->{err_lang}    = $arg_hash->{err_lang};}              # Deprecated
-      if ($arg_hash->{proxy})           {$self->{proxy}       = $arg_hash->{proxy};}
-      if ($arg_hash->{debug})           {$self->{debug}       = $arg_hash->{debug};}
-      if ($arg_hash->{timeout})         {$self->{timeout}     = $arg_hash->{timeout};}
-      if ($arg_hash->{compatibility_level}) {
-         $self->{compatibility_level}  = $arg_hash->{compatibility_level};
-      }# end if
-
-    }# end if
-
-
-  # Else-if we have an $arg_hash but it isn't a hash reference,
-  # set/log $ERROR and return failure to the caller.
-  elsif (defined($arg_hash)  &&  (ref($arg_hash) !~ /HASH/o)) {
-    return(undef());
-  }# end elsif
-
-  # Else, assume the caller doesn't want to set any object attributes.
-  else  {}  # end else
-
-  # Add an error attribute to always contain the most recent error data in scalar form.
-  $API::ERROR = $self->{error} = '';
-
-
-  # If we've gotten this far, we have a class (we hope), return success to the caller.
-  return($self);
-
-  }# end sub new()
-
 
 =pod
 
