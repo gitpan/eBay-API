@@ -1,12 +1,7 @@
-#!/usr/bin/perl -w
-#
-
 ################################################################################
 # Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. Annotation.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/06/2007 @ 17:05
 #
 ################################################################################
 
@@ -18,9 +13,9 @@ Generate annotations/documentation for the classes.
 
 =cut
 
-
-package Annotation;
-
+package # put package name on different line to skip pause indexing 
+    Annotation;
+  
 use strict;
 use warnings;
 
@@ -414,7 +409,8 @@ Manage call information for the annotations.
 =cut
 
 
-package Annotation::CallInfo;
+package #
+    Annotation::CallInfo;
 
 use Data::Dumper;
 

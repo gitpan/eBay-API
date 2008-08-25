@@ -1,17 +1,13 @@
-#!/usr/bin/perl -w
-#
-
 ################################################################################
 #
 # Module: ............... <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. BaseCodeGenDataType.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/08/2007 @ 15:39
 #
 ################################################################################
 
-package BaseCodeGenDataType;
+package # put package name on different line to skip pause indexing
+    BaseCodeGenDataType;
 
 =pod
 

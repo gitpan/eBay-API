@@ -1,7 +1,5 @@
-#!/usr/bin/perl -w
-#
-
-package CodeGenNonCallRequestResponseType;
+package # put package name on different line to skip pause indexing
+    CodeGenNonCallRequestResponseType;
 
 use strict;
 use warnings;

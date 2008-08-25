@@ -1,7 +1,5 @@
-#!/usr/bin/perl -w
-#
-
-package EnumElement;
+package # put package name on different line to skip pause indexing
+    EnumElement;
 
 use strict;
 use warnings;

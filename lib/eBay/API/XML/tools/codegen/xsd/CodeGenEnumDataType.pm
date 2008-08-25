@@ -1,12 +1,7 @@
-#!/usr/bin/perl -w
-#
-
 ################################################################################
 # Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. CodeGenEnumDataType.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/15/2007 @ 15:14
 #
 ################################################################################
 
@@ -18,9 +13,8 @@ Generate code for the enumerated data types.
 
 =cut
 
-
-
-package CodeGenEnumDataType;
+package # put package name on different line to skip pause indexing
+    CodeGenEnumDataType;
 
 use strict;
 use warnings;

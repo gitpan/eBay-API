@@ -1,15 +1,12 @@
-#!/usr/bin/perl
+package eBay::Exception;
 
 #########################################################################
 #
 # Module: ............... <user defined location>/eBay/API
 # File: ................. Exception.pm
 # Original Author: ...... Bob Bradley
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/21/2007 @ 17:05
 #
 #########################################################################
-
 
 =pod
 
@@ -147,13 +144,6 @@ Example:
 
 
 =cut
-
-
-
-# Package Declaration
-# ---------------------------------------------------------------------------
-package eBay::Exception;
-
 
 # Required Includes
 # ---------------------------------------------------------------------------

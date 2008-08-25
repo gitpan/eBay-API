@@ -1,17 +1,14 @@
-#!/usr/bin/perl
+package eBay::API::XML::BaseXml;
 
 ##########################################################################
 #
 # Module: ............... <user defined location>/eBay/API/XML
 # File: ................. BaseXml.pm
 # Original Author: ...... Jeff Nokes	
-# Last Modified By: ..... Tim Keefer
-# Last Modified: ........ 07/07/2008 @ 14:00
 #
 # Convert to UNIX lines
 #
 ##########################################################################
-
 
 =pod
 
@@ -32,11 +29,6 @@ various call classes.
 
 =cut
 
-# Package Declaration
-# --------------------------------------------------------------------------
-package eBay::API::XML::BaseXml;
-
-
 # Required Includes
 # --------------------------------------------------------------------------
 use strict;                   # Used to control variable hell.
@@ -49,17 +41,11 @@ use Data::Dumper;             # Used for logging support.
 # Constants
 use constant TRUE    => scalar 1;
 use constant FALSE   => scalar 0;
-use constant VERSION => scalar "0.10";
 
 # Global Variables
-our $VERSION = VERSION;       # The version of this class/module.
 our @ISA = ("Exporter",
-	    "eBay::API::BaseApi");     # Need to sub the Exporter class, to use the EXPORT* arrays below.
-
-# :DEFAULT exported symbols
-our @EXPORT = qw(
-		 $VERSION
-		);
+	    "eBay::API::BaseApi"
+);     # Need to sub the Exporter class, to use the EXPORT* arrays below.
 
 =head1 Subroutines
 

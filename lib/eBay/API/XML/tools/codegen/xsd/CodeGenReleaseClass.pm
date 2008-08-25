@@ -1,7 +1,5 @@
-#!/usr/bin/perl -w
-#
-
-package CodeGenReleaseClass;
+package # put package name on different line to skip pause indexing
+    CodeGenReleaseClass;
 
 use strict;
 use warnings;

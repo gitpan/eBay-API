@@ -1,16 +1,12 @@
-#!/usr/bin/perl -w
-#
-
 ################################################################################
 # Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. CodeGenApiCall.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 12/11/2006 @ 21:09
 #
 ################################################################################
 
-package CodeGenApiCall;
+package # put package name on different line to skip pause indexing
+    CodeGenApiCall;
 
 use strict;
 use warnings;

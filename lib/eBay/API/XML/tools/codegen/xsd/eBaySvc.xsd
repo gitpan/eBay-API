@@ -14540,6 +14540,9 @@ in the seller's listing request (AddItem).
 								whether a user qualifies to list an item on Express. To list an item on Express, a user must qualify based on conditions described in the eBay Web Services Guide.
 							</xs:documentation>
 							<xs:appinfo>
+								<DeprecationVersion>579</DeprecationVersion>
+								<DeprecationDetails>NoOp</DeprecationDetails>
+								<UseInstead/>
 								<SeeLink>
 									<Title>Seller Criteria for eBay Express</Title>
 									<URL>http://developer.ebay.com/DevZone/XML/docs/WebHelp/index.htm?context=eBay_XML_API&amp;topic=ExpressSellerCriteria</URL>
@@ -20821,6 +20824,9 @@ general refund (not tied to a transaction) to a buyer.
 								eBay Web Services Guide.
 							</xs:documentation>
 							<xs:appinfo>
+								<DeprecationVersion>579</DeprecationVersion>
+								<DeprecationDetails>NoOp</DeprecationDetails>
+								<UseInstead/>
 								<SeeLink>
 									<Title>Listing Criteria for eBay Express</Title>
 									<URL>http://developer.ebay.com/DevZone/XML/docs/WebHelp/index.htm?context=eBay_XML_API&amp;topic=ExpressListingCriteria</URL>
@@ -20918,6 +20924,9 @@ general refund (not tied to a transaction) to a buyer.
 								value is true or false for a given item.
 							</xs:documentation>
 							<xs:appinfo>
+								<DeprecationVersion>579</DeprecationVersion>
+								<DeprecationDetails>NoOp</DeprecationDetails>
+								<UseInstead/>
 								<CallInfo>
 									<CallName>VerifyAddItem</CallName>
 									<Returned>Conditionally</Returned>
@@ -20939,6 +20948,9 @@ general refund (not tied to a transaction) to a buyer.
 								- All other settings
 							</xs:documentation>
 							<xs:appinfo>
+								<DeprecationVersion>579</DeprecationVersion>
+								<DeprecationDetails>NoOp</DeprecationDetails>
+								<UseInstead/>
 								<SeeLink>
 									<Title>Listing Criteria for eBay Express</Title>
 									<URL>http://developer.ebay.com/DevZone/XML/docs/WebHelp/index.htm?context=eBay_XML_API&amp;topic=ExpressListingCriteria</URL>
@@ -35618,6 +35630,9 @@ communicated to the client.
 						Returned only if this category overrides the site default.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -35634,6 +35649,9 @@ communicated to the client.
 						Returned only if this category overrides the site default.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -35651,6 +35669,9 @@ communicated to the client.
 						Returned only if this category overrides the site default.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -43176,6 +43197,11 @@ One requirement is that the item must include the Item Condition attribute (usin
 Some categories may waive this requirement.
 Currently, this type defines no special meta-data. (An empty element is returned.)
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence/>
 	</xs:complexType>
@@ -43190,6 +43216,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 				Item details that are only applicable to listings on Express (not the main eBay
 				site).
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ExpressLargeImage" type="xs:anyURI" minOccurs="0">
@@ -43257,6 +43288,11 @@ in order to also be included on eBay Express.
 One requirement is that the category needs to support Express.
 Currently, this type defines no special meta-data. (An empty element is returned.)
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence/>
 	</xs:complexType>
@@ -43271,6 +43307,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 				Details about an Express aisle and matching item and catalog product counts
 				in that aisle, if any.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="DomainDetails" type="ns:ExpressHistogramDomainDetailsType" minOccurs="0">
@@ -43313,6 +43354,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 				Details about an Express department and matching item and catalog product counts 
 				in that department, if any.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="DomainDetails" type="ns:ExpressHistogramDomainDetailsType" minOccurs="0">
@@ -43353,6 +43399,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 				Identifies a domain and provides statistics for items and
 				catalog products found in that domain.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Name" type="xs:string" minOccurs="0">
@@ -43438,6 +43489,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 				Details about an Express product type and matching item and catalog product counts 
 				in that product type, if any.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="DomainDetails" type="ns:ExpressHistogramDomainDetailsType" minOccurs="0">
@@ -43460,6 +43516,17 @@ Currently, this type defines no special meta-data. (An empty element is returned
 
 -->
 	<xs:complexType name="ExpressItemRequirementsType">
+		<xs:annotation>
+			<xs:documentation>
+				Contains details about why an item does or doesn't qualify as an 
+				eBay Express listing.
+			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="SellerExpressEligible" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
@@ -43838,6 +43905,11 @@ in order to also be included on eBay Express.
 One requirement is that the item must include a picture (or gallery image).
 Currently, this type defines no special meta-data. (An empty element is returned.)
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence/>
 	</xs:complexType>
@@ -43851,6 +43923,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 			<xs:documentation>
 			Contains a seller's preferences related to listing items on Express.
 		</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ExpressSellingPreference" type="ns:ExpressSellingPreferenceCodeType" minOccurs="0">
@@ -43966,6 +44043,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 			<xs:documentation>
 				Information that eBay Express collects about an eBay catalog product.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="Title" type="xs:string" minOccurs="0">
@@ -44089,6 +44171,13 @@ Currently, this type defines no special meta-data. (An empty element is returned
 
 -->
 	<xs:complexType name="ExpressSellerRequirementsType">
+		<xs:annotation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
+		</xs:annotation>
 		<xs:sequence>
 			<xs:element name="ExpressSellingPreference" type="xs:boolean" minOccurs="0">
 				<xs:annotation>
@@ -44355,6 +44444,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 			<xs:documentation>
 			Specifies the kinds of eligible listings tht the seller prefers to include on Express.
 			</xs:documentation>
+			<xs:appinfo>
+				<DeprecationVersion>579</DeprecationVersion>
+				<DeprecationDetails>NoOp</DeprecationDetails>
+				<UseInstead/>
+			</xs:appinfo>
 		</xs:annotation>
 		<xs:restriction base="xs:token">
 			<xs:enumeration value="All">
@@ -45296,6 +45390,9 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						enabled for Express.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: none, ReturnSummary, ReturnAll</Details>
@@ -45319,6 +45416,9 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						in order to be eligible for Express.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: none, ReturnSummary, ReturnAll</Details>
@@ -45342,6 +45442,9 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						eligible for Express.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: none, ReturnSummary, ReturnAll</Details>
@@ -46706,6 +46809,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 					<xs:documentation>
 						Returns information about whether a category is eligible for eBay Express.
 					</xs:documentation>
+					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
+					</xs:appinfo>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="ExpressPicturesRequired">
@@ -46713,6 +46821,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 					<xs:documentation>
 						Returns information about whether a category requires pictures to be listed on Express.
 					</xs:documentation>
+					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
+					</xs:appinfo>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="ExpressConditionRequired">
@@ -46721,6 +46834,11 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						Returns information about whether a category requires item condition to be
 						listed on Express.
 					</xs:documentation>
+					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
+					</xs:appinfo>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="SellerContactDetailsEnabled">
@@ -61415,7 +61533,7 @@ Currently, this type defines no special meta-data. (An empty element is returned
 					determines whether or not this field is recognized.
 					&lt;br&gt;&lt;br&gt; &lt;span class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
 					Starting Mid-July 2008 this tag is not operational in the Sandbox environment
-					and is not operational in the Production environment beginning late August 2008.
+					and is not operational in the Production environment beginning in September 2008.
 					&lt;/span&gt;
 				</xs:documentation>
 				<xs:appinfo>
@@ -62891,7 +63009,7 @@ Currently, this type defines no special meta-data. (An empty element is returned
 			<xs:element name="Content" type="xs:string" minOccurs="0">
 				<xs:annotation>
 					<xs:documentation>
-						The message body. Plain text. Returned only for messages created after late August 2008.
+						The message body. Plain text. Returned only for messages created after September 2008 activation.
 						The API does not currently check the user email format preferences that can 
 						be specified in My Messages on the eBay.com Web site.
 					</xs:documentation>
@@ -62927,7 +63045,7 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						are returned or no final value fee is available, use this listing status information
 						to determine whether eBay has finished processing the listing.
 						&lt;br&gt;&lt;br&gt; &lt;span class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt; 
-						Starting in late August 2008, for the GetMyMessages call the listing status reflects the status of the listing at
+						Starting in September 2008, for the GetMyMessages call the listing status reflects the status of the listing at
 							the time the question was created. The listing status for this call may not match
 						the listing status returned by other calls such as GetItemTransactions.
 						This is returned only if Messages.Message.MessageType is AskSellerQuestion.
@@ -62950,7 +63068,7 @@ Currently, this type defines no special meta-data. (An empty element is returned
 						subject of the message. This is returned only if Messages.Message.MessageType is
 						AskSellerQuestion.
 						&lt;br&gt;&lt;br&gt; &lt;span class="tablenote"&gt;&lt;b&gt;Note:&lt;/b&gt;
-						This tag will be returned with data starting late August 2008. As of early July 2008,
+						This tag will be returned with data starting in September 2008. As of early July 2008,
 						this tag is not returned for the Sandbox environment.
 						&lt;/span&gt;
 					</xs:documentation>
@@ -85866,6 +85984,9 @@ Benefits and services vary for each tier. eBay calculates eligibility for each t
 						eligibility requirements.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -85889,6 +86010,9 @@ Benefits and services vary for each tier. eBay calculates eligibility for each t
 						Only meaningful if ExpressEnabled is true for the category.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -85915,6 +86039,9 @@ Benefits and services vary for each tier. eBay calculates eligibility for each t
 						Only meaningful if ExpressEnabled is true for the category.
 					</xs:documentation>
 					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
 						<CallInfo>
 							<CallName>GetCategoryFeatures</CallName>
 							<Details>DetailLevel: ReturnAll</Details>
@@ -93561,6 +93688,11 @@ A list of one or more characteristics sets mapped to the category, if any. Use t
 						and opted to automatically also be registered with eBay, but the
 						registration confirmation is still pending
 					</xs:documentation>
+					<xs:appinfo>
+						<DeprecationVersion>579</DeprecationVersion>
+						<DeprecationDetails>NoOp</DeprecationDetails>
+						<UseInstead/>
+					</xs:appinfo>
 				</xs:annotation>
 			</xs:enumeration>
 			<xs:enumeration value="Guest">

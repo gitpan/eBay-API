@@ -1,7 +1,5 @@
-#!/usr/bin/perl -w
-#
-
-package CodeGenSimpleDataType;
+package # put package name on different line to skip pause indexing
+    CodeGenSimpleDataType;
 
 use strict;
 use warnings;

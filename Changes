@@ -1,5 +1,8 @@
 Revision history for Perl extension eBay::API.
 
+0.24 Mon Aug 25 09:52:27 PDT 2008
+    - cleanup package namespaces for the perl CPAN indexer
+    
 0.23 Sun Aug 24 20:17:17 PDT 2008
     - add generated code to CPAN distribution
     - add local xsd file support to Makefile.PL

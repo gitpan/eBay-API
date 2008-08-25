@@ -1,12 +1,7 @@
-#!/usr/bin/perl
-#
-
 ################################################################################
 # Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. CodeGenBaseCallGenClass.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/09/2007 @ 15:31
 #
 ################################################################################
 
@@ -18,7 +13,8 @@ Generate the base class for all code generated call classes.
 
 =cut
 
-package CodeGenBaseCallGenClass;
+package # put package name on different line to skip pause indexing
+    CodeGenBaseCallGenClass;
 
 use strict;
 use warnings;
