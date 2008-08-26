@@ -1,7 +1,6 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         eBay-API
-version:      0.24
 version_from: lib/eBay/API.pm
 installdirs:  site
 requires:
@@ -31,6 +30,7 @@ requires:
     XML::Simple:                   2.09
     XML::Tidy:                     1.2.54HJnFa
     XML::Writer:                   0.6
-
+no_index:
+    directory:
+        - lib/eBay/API/XML/tools
 distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30

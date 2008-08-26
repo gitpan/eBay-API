@@ -6,6 +6,7 @@ eg/XML/getSearchResults.pl
 eg/XML/getUser.pl
 eg/XML/verifyAddItem.pl
 INSTALL
+META.yml
 lib/eBay/API.pm
 lib/eBay/API/BaseApi.pm
 lib/eBay/API/XML/BaseCall.pm
@@ -1217,4 +1218,3 @@ t/05testGeteBayOfficialTime.t
 t/calls/01use.t
 t/calls/02search.t
 t/lib/TestCommon/Credentials.pm
-META.yml                                 Module meta-data (added by MakeMaker)

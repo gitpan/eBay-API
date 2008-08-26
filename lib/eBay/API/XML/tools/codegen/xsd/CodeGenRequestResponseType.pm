@@ -1,12 +1,7 @@
-#!/usr/bin/perl -w
-#
-
 ################################################################################
 # Location: ............. <user defined location>eBay/API/XML/tools/codegen/xsd
 # File: ................. CodeGenEnumDataType.pm
 # Original Author: ...... Milenko Milanovic
-# Last Modified By: ..... Robert Bradley / Jeff Nokes
-# Last Modified: ........ 03/06/2007 @ 17:10
 #
 ################################################################################
 
@@ -18,8 +13,8 @@ Generate code for the call response types.
 
 =cut
 
-
-package CodeGenRequestResponseType;
+package # remove from indexing
+    CodeGenRequestResponseType;
 
 use strict;
 use warnings;

@@ -370,6 +370,8 @@
        
        # Tests
          test => { TESTS => 't/*.t t/calls/*.t' },
+       
+       NO_META => 1,
          
        # The version of the package.
          VERSION_FROM  => 'lib/eBay/API.pm',  #(uses $VERSION)
